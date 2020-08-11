@@ -54,7 +54,11 @@ here is the HourCallGroupConfig data structure
 | smart_call     | int       | only hour call unless how many messages received | 1       |
 | do_not_disturb | List<int> | don't hour call in certain period                | [1, 5]  |
 
+### Command
 
+Private chat send `yahourcall` to reload constant.yml
+
+Group chat send `yahourcall` to get chat count of current hour
 
 ## GroupChatManager performance benchmark
 

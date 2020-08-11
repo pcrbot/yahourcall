@@ -64,7 +64,7 @@ class HourCallManager:
         # pick default config
         default_config = HourCallGroupConfig()
         for group in self.config.get('groups'):
-            if group.get('group_id', None) != 0:
+            if group.get('group_id', None) == 0:
                 default_config = HourCallGroupConfig(group, default_config)
                 break
 

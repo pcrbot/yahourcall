@@ -52,7 +52,11 @@
 | smart_call     | int       | only hour call unless how many messages received | 1       |
 | do_not_disturb | List<int> | don't hour call in certain period                | [1, 5]  |
 
+### 指令
 
+私聊发送 `yahourcall` 以重新加载 constant.yml
+
+群聊发送 `yahourcall` 获取当前群，在该小时内的计数
 
 ## 群消息计数性能评估
 

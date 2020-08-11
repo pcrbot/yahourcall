@@ -73,7 +73,11 @@ async def dump_data():
 @nonebot.on_command('yahourcall')
 async def reload_config(session: CommandSession):
     user_id = session.event.user_id
-    if user_id in hour_call_manager.super_user:
+    group_id = session.event.group_id
+    if group_id is not None:
+        return await session.send('当前小时群内发言数为 {}'
+                                  .format(hour_call_manager.group_chat_manager.get_chat_count(group_id)))
+    elif user_id in hour_call_manager.super_user:
         hour_call_manager.reload_config()
         logger.info('<yahourcall> admin {} reloaded config'.format(session.event.user_id))
         await bot.send_private_msg(user_id=session.event.user_id,
