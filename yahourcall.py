@@ -45,7 +45,7 @@ async def hour_call():
 async def _(session: NLPSession):
     user_id = session.event.user_id
     # ignore some user
-    if hour_call_manager.should_ignore_user(user_id):
+    if user_id in hour_call_manager.block_user:
         return
 
     group_id = session.event.group_id
@@ -72,7 +72,9 @@ async def dump_data():
 
 @nonebot.on_command('yahourcall')
 async def reload_config(session: CommandSession):
-    hour_call_manager.reload_config()
-    logger.info('<yahourcall> admin {} reloaded config'.format(session.event.user_id))
-    await bot.send_private_msg(user_id=session.event.user_id,
-                               message='reloaded, enabled groups: {}'.format(hour_call_manager.enabled_groups))
+    user_id = session.event.user_id
+    if user_id in hour_call_manager.super_user:
+        hour_call_manager.reload_config()
+        logger.info('<yahourcall> admin {} reloaded config'.format(session.event.user_id))
+        await bot.send_private_msg(user_id=session.event.user_id,
+                                   message='reloaded, enabled groups: {}'.format(hour_call_manager.enabled_groups))

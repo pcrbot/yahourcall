@@ -100,9 +100,6 @@ class HourCallManager:
         g = hc_groups[now.day % len(hc_groups)]
         return self.hour_call[g]
 
-    def should_ignore_user(self, user_id):
-        return user_id in self.block_user
-
     @staticmethod
     def is_in_period(period: List[int], now):
         """determines if now is in the period"""
