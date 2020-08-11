@@ -13,7 +13,7 @@ CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 class HourCallGroupConfig:
     """Stores group config of hour call"""
-    DEFAULT_CONFIG = {'group_id': 0, 'enabled': False, 'smart_call': 1, 'do_not_disturb': [1, 5]}
+    DEFAULT_CONFIG = {'group_id': 0, 'enabled': True, 'smart_call': 1, 'do_not_disturb': [1, 5]}
 
     def __init__(self, group_config=None, default_config=None):
         if group_config is None:
