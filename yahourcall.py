@@ -13,7 +13,7 @@ from hoshino import Service
 sv = Service('yahourcall', enable_on_default=True, help_='另一个时报')
 @sv.scheduled_job('cron', minute='0')
 # """
-@nonebot.scheduler.scheduled_job('cron', second='0')
+@nonebot.scheduler.scheduled_job('cron', minute='0')
 async def hour_call():
     # get now hour
     now = datetime.now(pytz.timezone('Asia/Shanghai'))
