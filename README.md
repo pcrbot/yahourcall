@@ -30,7 +30,7 @@ If you want to use the redis data driver, please manually install `pip install -
 
 ### Config hour call
 
-You can modify the config.json to customize your own hour call or just use the hoshino ones
+You can modify the config.yml to customize your own hour call or just use the hoshino ones
 
 ### Config smart hour call
 
