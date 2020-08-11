@@ -24,7 +24,7 @@
 2. 在 `hoshino/config/__bot__.py` 中启用插件
 3. 将 'yahourcall' 添加至 MODULES_ON 中
 
-如果您想使用 REDIS 缓存对话计数，请手动安装 `pip install -r reds`
+如果您想使用 REDIS 缓存对话计数，请手动安装 `pip install -r redis`
 
 ### 配置报时
 

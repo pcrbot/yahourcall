@@ -26,7 +26,7 @@ For Hoshino users
 2. enable the plugin in `hoshino/config/__bot__.py`
 3. add 'yahourcall' to MODULES_ON
 
-If you want to use the redis data driver, please manually install `pip install -r reds`
+If you want to use the redis data driver, please manually install `pip install -r redis`
 
 ### Config hour call
 
