@@ -6,3 +6,6 @@ https://github.com/noahzark/yahourcall
 配置请参考constant.py
 报时语音请修改config.json
 """.strip()
+
+
+from .yahourcall import bot
