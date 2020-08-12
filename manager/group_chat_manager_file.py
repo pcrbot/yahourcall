@@ -23,5 +23,7 @@ class GroupChatManagerFile(GroupChatManager):
             pickle.dump(self.chats, f)
 
     def load(self):
+        if not os.path.exists(GroupChatManagerFile.SAVE_TO.format(CURRENT_DIR, self.prefix)):
+            return
         with open(GroupChatManagerFile.SAVE_TO.format(CURRENT_DIR, self.prefix), 'rb') as f:
             self.chats = pickle.load(f)
