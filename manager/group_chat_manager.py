@@ -15,9 +15,9 @@ class GroupChatManager:
 
         self.begin_at = time.time()
 
-    def get_current_period(self) -> int:
+    def get_current_period(self, offset=0) -> int:
         # return int((time.time() - self.begin_at) / self.duration) * self.duration
-        return int((time.time() - 5) / self.duration) * self.duration
+        return int((time.time() + offset) / self.duration) * self.duration
 
     def add_chat(self, group_id) -> int:
         """Add a chat and return chat count in current period"""
@@ -36,7 +36,7 @@ class GroupChatManager:
         if group_id not in self.chats:
             return 0
 
-        period = self.get_current_period()
+        period = self.get_current_period(offset=-5)
         chats = self.chats[group_id]
         if len(chats) > 1:
             # evict old chat count
