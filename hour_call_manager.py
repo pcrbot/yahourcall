@@ -13,7 +13,7 @@ CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 class HourCallGroupConfig:
     """Stores group config of hour call"""
-    DEFAULT_CONFIG = {'group_id': 0, 'enabled': True, 'smart_call': 1, 'do_not_disturb': [1, 5]}
+    DEFAULT_CONFIG = {'group_id': 0, 'enabled': True, 'smart_call': 1, 'do_not_disturb': [1, 5], 'words': 'config.json'}
 
     def __init__(self, group_config=None, default_config=None):
         if group_config is None:
@@ -22,6 +22,7 @@ class HourCallGroupConfig:
         self.enabled = group_config.get('enabled', default_config and default_config.enabled)
         self.smart_call = group_config.get('smart_call', default_config and default_config.smart_call)
         self.do_not_disturb = group_config.get('do_not_disturb', default_config and default_config.do_not_disturb)
+        self.words = group_config.get('words', default_config and default_config.words)
 
 
 class HourCallManager:
@@ -44,6 +45,12 @@ class HourCallManager:
         # data manager
         self.group_chat_manager: GroupChatManager = GroupChatManager()
 
+    def add_hour_call(self, words='config.json'):
+        if words in self.hour_call:
+            return
+        with open(CURRENT_DIR + '/' + words, mode='r', encoding='utf-8') as fp:
+            self.hour_call[words] = json.load(fp)
+
     def reload_config(self):
         """reload settings and hour call config, and build chat coutn manager
         """
@@ -54,8 +61,7 @@ class HourCallManager:
             else:
                 self.config = yaml.load(fp)
 
-        with open(CURRENT_DIR + '/config.json', mode='r', encoding='utf-8') as fp:
-            self.hour_call = json.load(fp)
+        self.add_hour_call()
 
         self.data_driver = self.config.get('data_driver', self.data_driver)
         self.super_user = self.config.get('super_user', self.super_user)
@@ -66,6 +72,7 @@ class HourCallManager:
         for group in self.config.get('groups'):
             if group.get('group_id', None) == 0:
                 default_config = HourCallGroupConfig(group, default_config)
+                self.add_hour_call(default_config.words)
                 break
 
         # build group config map
@@ -77,6 +84,7 @@ class HourCallManager:
                 hour_call_group_config = HourCallGroupConfig(group, default_config)
                 if hour_call_group_config.enabled:
                     self.groups[group_id] = hour_call_group_config
+                    self.add_hour_call(hour_call_group_config.words)
 
         # cache enabled groups
         self.enabled_groups = []
@@ -93,12 +101,13 @@ class HourCallManager:
             from .manager.group_chat_manager_redis import GroupChatManagerRedis
             self.group_chat_manager = GroupChatManagerRedis()
 
-    def get_hour_call(self):
+    def get_hour_call(self, group_id):
         """pick an hour call from config.json and change everyday"""
         now = datetime.now(pytz.timezone('Asia/Shanghai'))
-        hc_groups = self.hour_call["HOUR_CALLS"]
+        group_words = self.groups[group_id].words
+        hc_groups = self.hour_call[group_words]["HOUR_CALLS"]
         g = hc_groups[now.day % len(hc_groups)]
-        return self.hour_call[g]
+        return self.hour_call[group_words][g]
 
     @staticmethod
     def is_in_period(period: List[int], now):

@@ -17,7 +17,6 @@ sv = Service('yahourcall', enable_on_default=True, help_='另一个时报')
 async def hour_call():
     # get now hour
     now = datetime.now(pytz.timezone('Asia/Shanghai'))
-    msg = hour_call_manager.get_hour_call()[now.hour]
     for group_id in hour_call_manager.enabled_groups:
         # skip default group(0) and sometimes None
         if not group_id:
@@ -36,6 +35,7 @@ async def hour_call():
                              .format(hour_call_manager.group_chat_manager.get_chat_count(group_id)))
                 continue
 
+            msg = hour_call_manager.get_hour_call(group_id)[now.hour]
             await bot.send_group_msg(group_id=group_id, message=msg)
         except Exception as e:
             logger.exception('<yahourcall> error', exc_info=e)

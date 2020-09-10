@@ -19,11 +19,13 @@ block_user:
 # enabled: 是否开启本群报时，默认 True，如果只想设置特定的群开启报时请将 0 号配置项设为 False
 # smart_call: 智能报时触发发验人数，默认1，只有上一小时发言人数大于等于该阈值才会报时
 # do_not_disturb: 勿扰时段，默认[1, 5]，该时段该群不会报时，如果只想回避特定某个小时，请使用[8, 8]
+# words: 报时配置文件，可以分群配置报时内容，默认config.json
 # 特别的，如果想跨日回避，请写成[23, 6]的形式，即只有7点~22点会报时
 groups:
   - group_id: 0
     enabled: True
     smart_call: 1
+    words: config.json
 
   - group_id: 1
     enabled: False
