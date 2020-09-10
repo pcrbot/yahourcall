@@ -75,8 +75,14 @@ async def reload_config(session: CommandSession):
     user_id = session.event.user_id
     group_id = session.event.group_id
     if group_id is not None:
-        return await session.send('当前小时群内发言数为 {}'
-                                  .format(hour_call_manager.group_chat_manager.get_chat_count(group_id)))
+        now = datetime.now(pytz.timezone('Asia/Shanghai'))
+        msg = hour_call_manager.get_hour_call(group_id)[now.hour]
+
+        do_not_disturb = hour_call_manager.do_not_disturb(group_id, now.hour)
+        should_not_call = hour_call_manager.should_not_call(group_id)
+        return await session.send('当前小时群内发言数为 {} {}\nnot_disturb: {} not_call: {}'
+                                  .format(hour_call_manager.group_chat_manager.get_chat_count(group_id), msg,
+                                          do_not_disturb, should_not_call))
     elif user_id in hour_call_manager.super_user:
         hour_call_manager.reload_config()
         logger.info('<yahourcall> admin {} reloaded config'.format(session.event.user_id))
