@@ -2,11 +2,11 @@
 
 yet another hour call plugin for nonebot / hoshino
 
-You can get newest version from https://github.com/noahzark/yahourcall
+You can get newest version from https://github.com/pcrbot/yahourcall
 
 [TOC]
 
-[中文版](https://github.com/noahzark/yahourcall/blob/master/README.zh.md)
+[中文版](https://github.com/pcrbot/yahourcall/blob/master/README.zh.md)
 
 ## Usage
 
